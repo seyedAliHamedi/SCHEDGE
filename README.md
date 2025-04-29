@@ -1,6 +1,6 @@
 # 🌐 SchEdge: A Dynamic, Multi-agent, and Scalable Scheduling Simulator for IoT Edge
 
-![Simulator Architecture](results/result.png)
+![Simulator Architecture](./arch.png)
 
 **SchEdge** is a Python-based simulator for evaluating **online task scheduling strategies** in dynamic IoT environments. It supports **multi-agent**, **RL-based**, and **heuristic** approaches, and models heterogeneous devices, real-time task arrivals, and realistic system constraints.
 
@@ -42,13 +42,7 @@
 │   ├── util.py                    # Helper functions
 │   └── window_manager.py         # Cyclical task feeder
 ├── model/
-│   ├── actor_critic.py            # A3C RL components
-│   ├── agent.py                   # Agent wrapper
-│   ├── trees/                     # Tree-based learning models
-│   │   ├── ClusTree.py
-│   │   ├── DDT.py
-│   │   └── SoftDDT.py
-│   └── utils.py                   # Shared model utilities
+│   └── your_schduler.py
 ├── results/                       # Output folder
 │   ├── checkpoints/model.pth      # Trained model
 │   ├── result.png                 # Simulation output graph
@@ -123,7 +117,7 @@ Modify `configs.py` to update:
 
 ### 🔁 Plug in Your Own Agent
 
-Replace `model/agent.py` and `model/actor_critic.py` with your own scheduler logic — heuristic, tree-based, or RL.
+Replace `model/with your own scheduler logic — heuristic, tree-based, or RL.
 
 ---
 
