@@ -15,12 +15,11 @@
 
 ## 🚀 Key Features
 
-- 🧩 **Modular Design**: Plug-and-play environment, agents, and preprocessing
+- 🧩 **Modular Design**: Plug-and-play environment, schdulers, and preprocessing
 - 🕒 **Real-time Task Scheduling**: Tasks arrive in windows, based on DAGs
-- 🤖 **Multi-Agent Reinforcement Learning**: Built-in A3C agent + tree-based models
 - 🌍 **Heterogeneous IoT Modeling**: Devices with core counts, battery limits, and queues
 - 🔁 **Dynamic Topology**: Devices can join/leave during runtime
-- 📊 **Evaluation & Logging**: Time, energy, success rate, and agent reward tracking
+- 📊 **Evaluation & Logging**: Time, energy, success rate, reward tracking
 
 ---
 
@@ -42,12 +41,11 @@
 │   ├── util.py                    # Helper functions
 │   └── window_manager.py         # Cyclical task feeder
 ├── model/
-│   └── your_schduler.py
+│   └── your_scheduler.py
 ├── results/                       # Output folder
-│   ├── checkpoints/model.pth      # Trained model
 │   ├── result.png                 # Simulation output graph
 │   ├── time.png                   # Iteration time visualization
-│   └── summery2.csv              # Metric summary
+│   └── summery.csv              # Metric summary
 ├── main.py                        # Entry point
 ├── requirments.txt                # Dependency list
 ├── LICENSE
@@ -83,7 +81,6 @@ By default, it will:
 
 - Generate tasks and devices from `data/resources/`
 - Simulate task arrivals in real time
-- Run the A3C multi-agent scheduler
 - Save performance logs in `results/`
 
 ---
@@ -95,7 +92,6 @@ By default, it will:
 | Makespan       | Total time to finish all tasks             |
 | Memory Usage   | Sampled every 10s to monitor memory trends |
 | Task Success % | Ratio of successfully scheduled tasks      |
-| Agent Reward   | RL feedback per iteration                  |
 
 Visuals:
 
@@ -112,12 +108,11 @@ Modify `configs.py` to update:
 
 - Window size
 - Task arrival rate
-- Number of agents
 - Scheduling frequency
 
-### 🔁 Plug in Your Own Agent
+### 🔁 Plug in Your Own Scheduler
 
-Replace `model/with your own scheduler logic — heuristic, tree-based, or RL.
+Replace `model/ with your own scheduler logic — heuristic, tree-based, or RL.
 
 ---
 
