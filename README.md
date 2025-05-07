@@ -53,6 +53,7 @@
 └── README.md
 
 
+```
 
 ⸻
 
@@ -61,26 +62,27 @@
 ⚠️ Requires Python 3.8+
 
 # Clone the repo
+
 git clone https://github.com/seyedAliHamedi/SCHEDGE.git
 
 cd SchEdge
 
 # Install dependencies
+
 pip install -r requirments.txt
-
-
 
 ⸻
 
 🧪 Quick Start
 
 # Run the simulation
+
 python main.py
 
 By default, it will:
-	•	Generate tasks and devices from data/resources/
-	•	Simulate task arrivals in real time
-	•	Save performance logs in results/
+• Generate tasks and devices from data/resources/
+• Simulate task arrivals in real time
+• Save performance logs in results/
 
 ⸻
 
@@ -93,30 +95,28 @@ SchEdge supports plug-and-play scheduler selection via the learning_config in co
 In configs.py, set:
 
 learning_config = {
-  ...
-  "scheduler_type": "heuristic",  # Options: offline | online | drl | heuristic | evolutionary
-  ...
+...
+"scheduler_type": "heuristic", # Options: offline | online | drl | heuristic | evolutionary
+...
 }
 
 🧠 Scheduler Options
 
-Scheduler	Description
-offline	Greedy, static rule-based scheduler (safe/task-compatible only)
-online	Neural net-based scheduler (learns to map task features to device/core)
-drl	Actor-Critic RL scheduler (e.g. PPO, A2C) with reward-driven adaptation
-heuristic	Rule-based scheduler (fastest + compatible device/core selection)
-evolutionary	Genetic algorithm that evolves the best device/core/frequency tuple
-
-
+Scheduler Description
+offline Greedy, static rule-based scheduler (safe/task-compatible only)
+online Neural net-based scheduler (learns to map task features to device/core)
+drl Actor-Critic RL scheduler (e.g. PPO, A2C) with reward-driven adaptation
+heuristic Rule-based scheduler (fastest + compatible device/core selection)
+evolutionary Genetic algorithm that evolves the best device/core/frequency tuple
 
 ⸻
 
 🧬 Data Generation
 
 The data generator automatically creates:
-	•	DAG-based job graphs with predecessor-successor relations
-	•	Heterogeneous device pools (IoT, MEC, Cloud)
-	•	Configurable task attributes: computational load, data size, safety
+• DAG-based job graphs with predecessor-successor relations
+• Heterogeneous device pools (IoT, MEC, Cloud)
+• Configurable task attributes: computational load, data size, safety
 
 To regenerate synthetic datasets manually, modify data/gen.py or rerun:
 
@@ -128,14 +128,14 @@ You can adjust ranges in jobs_config and devices_config inside configs.py.
 
 📊 Sample Output
 
-✅ Metric	💡 Description
-Makespan	Total time to finish all tasks
-Memory Usage	Sampled every 10s to monitor memory trends
-Task Success %	Ratio of successfully scheduled tasks
+✅ Metric 💡 Description
+Makespan Total time to finish all tasks
+Memory Usage Sampled every 10s to monitor memory trends
+Task Success % Ratio of successfully scheduled tasks
 
 Visuals:
-	•	result.png → Behavioral performance of apps and scheduler
-	•	time.png → Scheduler iteration performance
+• result.png → Behavioral performance of apps and scheduler
+• time.png → Scheduler iteration performance
 
 ⸻
 
@@ -144,10 +144,10 @@ Visuals:
 🧾 Change Simulation Settings
 
 Edit configs.py to control:
-	•	DAG structure & task load
-	•	Device heterogeneity
-	•	Reward functions (rewardSetup, alpha, beta)
-	•	Runtime settings (multi_agent, window size)
+• DAG structure & task load
+• Device heterogeneity
+• Reward functions (rewardSetup, alpha, beta)
+• Runtime settings (multi_agent, window size)
 
 ⸻
 
@@ -162,5 +162,7 @@ If you use SchEdge in your research or publication, please cite our work (prepri
 MIT License. See LICENSE for details.
 
 ---
+
+```
 
 ```
