@@ -94,11 +94,13 @@ SchEdge supports plug-and-play scheduler selection via the learning_config in co
 
 In configs.py, set:
 
+```bash
 learning_config = {
 ...
 "scheduler_type": "heuristic", # Options: offline | online | drl | heuristic | evolutionary
 ...
 }
+```
 
 🧠 Scheduler Options
 
@@ -120,7 +122,9 @@ The data generator automatically creates:
 
 To regenerate synthetic datasets manually, modify data/gen.py or rerun:
 
+```bash
 python data/gen.py
+```
 
 You can adjust ranges in jobs_config and devices_config inside configs.py.
 
@@ -134,8 +138,9 @@ Memory Usage Sampled every 10s to monitor memory trends
 Task Success % Ratio of successfully scheduled tasks
 
 Visuals:
-• result.png → Behavioral performance of apps and scheduler
-• time.png → Scheduler iteration performance
+
+- **result.png** → Behavioral performance of apps and scheduler
+- **time.png** → Scheduler iteration performance
 
 ⸻
 
@@ -143,11 +148,12 @@ Visuals:
 
 🧾 Change Simulation Settings
 
-Edit configs.py to control:
-• DAG structure & task load
-• Device heterogeneity
-• Reward functions (rewardSetup, alpha, beta)
-• Runtime settings (multi_agent, window size)
+Edit `configs.py` to control:
+
+- **DAG structure & task load**
+- **Device heterogeneity**
+- **Reward functions** (`rewardSetup`, `alpha`, `beta`)
+- **Runtime settings** (`multi_agent`, `window_size`)
 
 ⸻
 
@@ -162,7 +168,3 @@ If you use SchEdge in your research or publication, please cite our work (prepri
 MIT License. See LICENSE for details.
 
 ---
-
-```
-
-```
