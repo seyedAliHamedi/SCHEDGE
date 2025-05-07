@@ -1,5 +1,6 @@
 import numpy as np
-from configs import learning_config,jobs_config
+from configs import learning_config, jobs_config
+
 
 class Utility:
     def __init__(self, devices):
@@ -7,15 +8,18 @@ class Utility:
         self.min_time, self.max_time, self.min_energy, self.max_energy = self.get_min_max_time_energy()
 
     # FEATURE EXTRACTION
-    def get_input(self, task):
+    def get_input(self, task, ):
 
         if learning_config['regularize_input']:
             compLoad = [min(jobs_config["task"]["computational_load"]) * 1e6,
                         max(jobs_config["task"]["computational_load"]) * 1e6]
-            inputs = [min(jobs_config["task"]["input_size"]) * 1e6, max(jobs_config["task"]["input_size"]) * 1e6]
-            outputs = [min(jobs_config["task"]["output_size"]) * 1e6, max(jobs_config["task"]["output_size"]) * 1e6]
+            inputs = [min(jobs_config["task"]["input_size"]) * 1e6,
+                      max(jobs_config["task"]["input_size"]) * 1e6]
+            outputs = [min(jobs_config["task"]["output_size"]) *
+                       1e6, max(jobs_config["task"]["output_size"]) * 1e6]
             task_features = [
-                (task["computational_load"] - compLoad[0]) / (compLoad[1] - compLoad[0]),
+                (task["computational_load"] - compLoad[0]) /
+                (compLoad[1] - compLoad[0]),
                 (task["input_size"] - inputs[0]) / (inputs[1] - inputs[0]),
                 (task["output_size"] - outputs[0]) / (outputs[1] - outputs[0]),
                 task["is_safe"],
@@ -66,7 +70,8 @@ class Utility:
                                         "output_size": output}
 
                                 # Calculate execution time and energy
-                                total_time, total_energy = calc_total(device, task, [], core_index, dvfs_index)
+                                total_time, total_energy = calc_total(
+                                    device, task, [], core_index, dvfs_index)
 
                                 min_time = min(min_time, total_time)
                                 max_time = max(max_time, total_time)
@@ -76,7 +81,8 @@ class Utility:
 
     def getBatteryPunish(self, b_start, b_end, alpha=learning_config["init_punish"], beta=3.0, gamma=0.1):
         if b_start < b_end:
-            raise ValueError("Final battery level must be less than or equal to the initial battery level.")
+            raise ValueError(
+                "Final battery level must be less than or equal to the initial battery level.")
 
         # Calculate the percentage of battery drained and apply non-linearity
         battery_drain = (b_start - b_end) ** gamma
@@ -89,13 +95,14 @@ class Utility:
 
         return penalty
 
-    def checkBatteryDrain(self, energy, device_dict,device):
+    def checkBatteryDrain(self, energy, device_dict, device):
         punish = 0
         batteryFail = 0
         if device['type'] == "iot":
             battery_capacity = device["battery_capacity"]
             battery_start = device_dict['batteryLevel']
-            battery_end = ((battery_start * battery_capacity) - (energy * 5e5)) / battery_capacity
+            battery_end = ((battery_start * battery_capacity) -
+                           (energy * 1e5)) / battery_capacity
             punish = self.getBatteryPunish(battery_start, battery_end)
             device_dict['batteryLevel'] = battery_end
             if battery_end < device["ISL"] * 100:
@@ -103,7 +110,6 @@ class Utility:
                 print("battery fail")
 
         return punish, batteryFail
-
 
     def regularize_output(self, total_t=0, total_e=0):
         if total_e:
@@ -119,14 +125,14 @@ class Utility:
 
 
 def extract_pe_data(pe):
-    # battery_now = pe['live_state']['battery_now']
+    battery_now = pe['live_state']['battery_now']
     acceptable_tasks = [0, 0, 0, 0]
     for i in range(1, 5):
         if i in pe['acceptable_tasks']:
             acceptable_tasks[i - 1] = 1
 
     # return [battery_now /100, pe['is_safe']] + acceptable_tasks
-    return [pe['is_safe']]+acceptable_tasks
+    return [battery_now / 100, pe['is_safe']]
 
 
 def lambda_D(D, lambda_max, T_low, T_high):
@@ -136,6 +142,7 @@ def lambda_D(D, lambda_max, T_low, T_high):
         return lambda_max * (T_high - D) / (T_high - T_low)
     else:
         return 0
+
 
 def gini_coefficient(utils):
     utils = np.array(utils)
@@ -148,8 +155,11 @@ def gini_coefficient(utils):
     return G
 
 # FORMULAS
+
+
 def calc_execution_time(device, task, core, dvfs):
     return task["computational_load"] / device["voltages_frequencies"][core][dvfs][0]
+
 
 def calc_power_consumption(device, task, core, dvfs):
     if device['type'] == "cloud":
@@ -157,8 +167,10 @@ def calc_power_consumption(device, task, core, dvfs):
     return (device["capacitance"] * (device["voltages_frequencies"][core][dvfs][1] ** 2) *
             device["voltages_frequencies"][core][dvfs][0])
 
+
 def calc_energy(device, task, core, dvfs):
     return calc_execution_time(device, task, core, dvfs) * calc_power_consumption(device, task, core, dvfs)
+
 
 def pred_cost(task_pres, device):
     transferRate5g = 1e9
@@ -174,7 +186,8 @@ def pred_cost(task_pres, device):
     costs = []
     device_type = device["type"]
     for pre in task_pres:
-        inf_pairs.append((pre['live_state']["chosen_device_type"], pre["output_size"]))
+        inf_pairs.append(
+            (pre['live_state']["chosen_device_type"], pre["output_size"]))
 
     for pair in inf_pairs:
         if pair[0] == device_type:
@@ -189,14 +202,16 @@ def pred_cost(task_pres, device):
                 costs.append((time, time * powerCC))
 
             elif (pair[0] == "cloud" and device_type == "iot") or (pair[0] == "iot" and device_type == "cloud"):
-                time = (pair[1] / transferRate5g + latency5g) + (pair[1] / transferRateFiber + latencyFiber)
+                time = (pair[1] / transferRate5g + latency5g) + \
+                    (pair[1] / transferRateFiber + latencyFiber)
                 energy = ((pair[1] / transferRate5g + latency5g) * powerMec) + (
-                            (pair[1] / transferRateFiber + latencyFiber) * powerCC)
+                    (pair[1] / transferRateFiber + latencyFiber) * powerCC)
                 costs.append((time, energy))
 
     max_t = max(costs, key=lambda x: x[0])[0]
     sum_e = sum(e for _, e in costs)
     return max_t, sum_e
+
 
 def calc_total(device, task, task_pres, core, dvfs):
     timeTransMec = 0
@@ -252,14 +267,16 @@ def calc_total(device, task, task_pres, core, dvfs):
         #     totalEnergy = baseEnergy
 
     elif len(task_pres) > 0:
-        predecessors_time_cost, predecessors_energy_cost = pred_cost(task_pres, device)
+        predecessors_time_cost, predecessors_energy_cost = pred_cost(
+            task_pres, device)
     totalTime += predecessors_time_cost
     totalEnergy += predecessors_energy_cost
-
 
     return totalTime, totalEnergy
 
 # REWARDS AND PUNISHMENTS
+
+
 def reward_function(e=0, t=0, punish=0):
     setup = learning_config['rewardSetup']
     alpha = learning_config['alpha']
@@ -285,6 +302,7 @@ def reward_function(e=0, t=0, punish=0):
         return -np.log(alpha * e + beta * t)
     elif setup == 7:
         return -((alpha * e + beta * t) ** 2)
+
 
 def make_paths(depth):
     paths = []
