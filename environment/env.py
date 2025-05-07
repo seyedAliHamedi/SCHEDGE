@@ -59,7 +59,7 @@ class Environment:
         self.state.update(self.manager)
         print("Starting agents .....")
 
-        TEST_SCHEDULER = "evolutionary"
+        TEST_SCHEDULER = environment_config['scheduler_type']
 
         if TEST_SCHEDULER == "offline":
             scheduler = OfflineScheduler(self.state, self.devices)

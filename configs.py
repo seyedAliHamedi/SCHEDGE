@@ -19,7 +19,7 @@ jobs_config = {
 devices_config = {
     "iot": {
         "num_devices": 100,
-        "num_cores": [4,8,16],
+        "num_cores": [4, 8, 16],
         "voltage_frequencies": [
             (10e6, 1.8),
             (20e6, 2.3),
@@ -36,11 +36,11 @@ devices_config = {
         "battery_capacity": (36, 41),
         "safe": (0.25, 0.75),
         "num_acceptable_task": [3, 4],
-        "maxQueue":1,
+        "maxQueue": 1,
     },
     "mec": {
         "num_devices": 50,
-        "num_cores": [16,32,64],
+        "num_cores": [16, 32, 64],
         "voltage_frequencies": [
             (600 * 1e6, 0.8),
             (750 * 1e6, 0.825),
@@ -55,7 +55,7 @@ devices_config = {
         "battery_capacity": -1,
         "safe": (0.5, 0.5),
         "num_acceptable_task": [3, 4],
-        "maxQueue":1,
+        "maxQueue": 1,
 
     },
     "cloud": {
@@ -67,8 +67,8 @@ devices_config = {
         "powerIdle": [0],
         "battery_capacity": -1,
         "safe": (1, 0),
-        "num_acceptable_task": [3, 4],  
-        "maxQueue":1,
+        "num_acceptable_task": [3, 4],
+        "maxQueue": 1,
     },
 }
 # generate random Processing element attributes based on the bounds and ranges defined in the config
@@ -85,9 +85,9 @@ learning_config = {
     ###### TREE #######
     "tree": "ddt",  # ddt
 
-    #    ddt :  ddt 
+    #    ddt :  ddt
     #    soft-ddt :  soft tree
-    #    clustree : clustree 
+    #    clustree : clustree
 
     "tree_max_depth": 3,
 
@@ -123,12 +123,12 @@ learning_config = {
     "drain_battery": True,
     'scalability': True,
     "utilization": True,
-    "safe_punish":True,
-    "kind_punish":True,
-    "queue_punish":False,
-    
-    
-    
+    "safe_punish": True,
+    "kind_punish": True,
+    "queue_punish": False,
+
+
+
 
     ###### INPUT & OUTPUT #######
     "onehot_kind": True,  # one-hotting the task kind
@@ -145,8 +145,8 @@ learning_config = {
 
     "ppo_epsilon": 0.1,  # Reduced from 0.2 for more stable updates
     "gae_lambda": 0.0,  # Increased from 0.95 for better advantage estimation
-    "ppo_epochs":10, 
-    "lr": 0.001, 
+    "ppo_epochs": 10,
+    "lr": 0.001,
 
     "critic_hidden_layer_num": 1,
     "critic_hidden_layer_dim": 256,
@@ -154,7 +154,7 @@ learning_config = {
     "discount_factor": 0.0,  # 0: reward , 0.99:return
 
     'add_device_iterations': 0.0005,  # Probability of adding device each iteration
-    'remove_device_iterations': 0.0005,  
+    'remove_device_iterations': 0.0005,
 
     "alpha_diversity": 1,
     "alpha_gin": 1,
@@ -173,8 +173,9 @@ learning_config = {
 
 
 environment_config = {
+    "scheduler_type": "offilne",
     "multi_agent": 16,
     "time_out_counter": 100,
     "window": {"size": 200, "max_jobs": 40, "clock": 10},
-    "display":False
+    "display": False
 }
