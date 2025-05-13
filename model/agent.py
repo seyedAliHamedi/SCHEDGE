@@ -68,7 +68,7 @@ class Agent(mp.Process):
             except:
                 continue
             if current_job and len(current_job["runningTasks"]) + len(current_job["finishedTasks"]) == current_job["task_count"]:
-                print(f"DONE")
+                print(f"--  JOB {self.assigned_job} DONE")
                 self.assigned_job = None
 
     def stop(self):

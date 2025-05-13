@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import pandas as pd
 import torch.multiprocessing as mp
@@ -81,8 +82,8 @@ class State:
             # OPTIMIZATION: Calculate totals before lock
             total_t, total_e = calc_total(
                 pe, task, [self.db_tasks[pre_id] for pre_id in task["predecessors"]], core_i, 0)
-            execution_time = min(total_t, 1)
-            placing_slot = (execution_time, task_ID)
+            # execution_time = min(total_t, 1)
+            placing_slot = (total_t, task_ID)
 
             queue_index, core_index, lag_time = self.find_place(
                 pe_dict, core_i)
@@ -246,7 +247,9 @@ class State:
         job_data = {}
         for job_id, job in self.jobs.items():
             job_data[job_id] = {
+                "remainingTasks": list(job["remainingTasks"]),
                 "runningTasks": list(job["runningTasks"]),
+                "finishedTasks": list(job["finishedTasks"]),
             }
         print('\033[92m', pd.DataFrame(job_data), '\033[0m', "\n")
 

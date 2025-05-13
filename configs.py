@@ -1,5 +1,5 @@
 jobs_config = {
-    "num_jobs": 10000,
+    "num_jobs": 100,
     "max_deadline": 100,
     "max_task_per_depth": 2,
     "max_depth": 5,
@@ -13,13 +13,13 @@ jobs_config = {
     },
     "max_num_parents_dag": 1,
     "min_num_nodes_dag": 5,
-    "max_num_nodes_dag": 15
+    "max_num_nodes_dag": 10,
 }
 
 devices_config = {
     "iot": {
-        "num_devices": 100,
-        "num_cores": [4, 8, 16],
+        "num_devices": 2,
+        "num_cores": [2],
         "voltage_frequencies": [
             (10e6, 1.8),
             (20e6, 2.3),
@@ -39,8 +39,8 @@ devices_config = {
         "maxQueue": 1,
     },
     "mec": {
-        "num_devices": 50,
-        "num_cores": [16, 32, 64],
+        "num_devices": 1,
+        "num_cores": [4],
         "voltage_frequencies": [
             (600 * 1e6, 0.8),
             (750 * 1e6, 0.825),
@@ -59,7 +59,7 @@ devices_config = {
 
     },
     "cloud": {
-        "num_devices": 1,
+        "num_devices": 0,
         "num_cores": 128,
         "voltage_frequencies": ((2.8e9, 13.85), (3.9e9, 24.28), (5e9, 36)),
         "isl": -1,
@@ -173,9 +173,9 @@ learning_config = {
 
 
 environment_config = {
-    "scheduler_type": "offilne",
+    "scheduler_type": "offline",
     "multi_agent": 16,
     "time_out_counter": 100,
-    "window": {"size": 200, "max_jobs": 40, "clock": 10},
-    "display": False
+    "window": {"size": 15, "max_jobs": 3, "clock": 10},
+    "display": True
 }
